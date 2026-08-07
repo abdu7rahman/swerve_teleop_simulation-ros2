@@ -1,0 +1,45 @@
+# ros2_control controllers for the swerve base.
+#
+# ROS 1 used swerve_steering_controller/SwerveSteeringController, a third-party
+# controller with no ROS 2 port. ros2_controllers ships diff-drive, tricycle and
+# Ackermann steering, but nothing that solves four independently steered modules.
+#
+# So the split here is: ros2_control owns the joints through two generic group
+# controllers, and the swerve kinematics live in the swerve_kinematics node
+# (see swerve_bringup/swerve_kinematics.py). That keeps the maths in Python
+# where it can be read and tuned, and leaves the real-time side to stock
+# controllers.
+
+controller_manager:
+  ros__parameters:
+    update_rate: 50  # Hz, matching the ROS 1 publish_rate
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    steering_position_controller:
+      type: position_controllers/JointGroupPositionController
+
+    wheel_velocity_controller:
+      type: velocity_controllers/JointGroupVelocityController
+
+steering_position_controller:
+  ros__parameters:
+    # Module order: front-left, front-right, rear-right, rear-left.
+    # ROS 1 listed holders as ['Rev3','Rev5','Rev1','Rev7'] against positions
+    # [[-0.3,-0.3], [-0.3,0.3], [0.3,-0.3], [0.3,0.3]].
+    joints:
+      - Rev3
+      - Rev5
+      - Rev1
+      - Rev7
+
+wheel_velocity_controller:
+  ros__parameters:
+    # Same module order as the steering joints above; ROS 1 wheels were
+    # ['Rev4','Rev6','Rev2','Rev8'].
+    joints:
+      - Rev4
+      - Rev6
+      - Rev2
+      - Rev8

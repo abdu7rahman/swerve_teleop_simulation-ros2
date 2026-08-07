@@ -1,0 +1,11 @@
+swerve_kinematics:
+  ros__parameters:
+    # Module mounting offsets (x, y) in base_link, flattened, in the same order
+    # as the controller joint lists. Taken from the ROS 1 `positions` key.
+    module_positions: [-0.3, -0.3, -0.3, 0.3, 0.3, -0.3, 0.3, 0.3]
+    wheel_radius: 0.06
+    # ROS 1 `limits`: each steering joint spans [-3.14, 3.14].
+    steer_limit: 3.14
+    max_wheel_speed: 5.0
+    publish_rate: 50.0
+    cmd_vel_timeout: 0.5
