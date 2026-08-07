@@ -109,8 +109,8 @@ Two behaviours the port adds because a hand-written controller can afford them:
   steering where it is.
 - **The PID gains were commented out.** `gazebo_ros_control/pid_gains` in
   `ros_controllers.yaml` was entirely commented, so Gazebo fell back to defaults.
-  The group controllers do not need them; if you move to effort control, that is
-  where they would go.
+  The group controllers do not need them; they would apply if the port moves
+  to effort control.
 
 The URDF geometry, inertials, Gazebo material and friction settings carry over
 unchanged.
